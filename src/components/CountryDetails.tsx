@@ -72,16 +72,19 @@ export const CountryDetails: React.FC = () => {
 
                 {countryInfo ? (
                     <div>
-                        <p>Capital: {countryInfo?.capital[0]}</p>
-                        <p>Population: {countryInfo?.population}</p>
+                        <p>Capital: {countryInfo.capital[0]}</p>
+                        <p>Population: {countryInfo.population}</p>
                         <p>
-                            Latitude: {countryInfo?.latlng[0]}
+                            Latitude: {countryInfo.latlng[0]}
                             <sup>o</sup>
                         </p>
                         <p>
-                            Longitude: {countryInfo?.latlng[1]}
+                            Longitude: {countryInfo.latlng[1]}
                             <sup>o</sup>
                         </p>
+                        <small>Country Flag : </small>
+                        <img src={countryInfo.flags.svg} 
+                                height="70px"  alt="" />
                     </div>
                 ) : (
                     <p>No data found</p>

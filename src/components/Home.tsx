@@ -24,10 +24,11 @@ export const Home = () => {
                     value={countryName}
                     label="Enter country Name"
                     variant="outlined"
+                    
                     onChange={(e) => setCountryName(e.target.value)}
                 />
             </div>
-            <Button size="medium" variant="contained" onClick={getCuntryName}>
+            <Button size="medium" variant="contained" disabled={countryName===''} onClick={getCuntryName}>
                 Search
             </Button>
         </Container>

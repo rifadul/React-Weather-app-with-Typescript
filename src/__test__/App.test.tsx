@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import { MemoryRouter } from 'react-router-dom';
-import axios from 'axios';
 
 describe('Test App Router', () => {
     test('should Render Home component with path "/"', () => {

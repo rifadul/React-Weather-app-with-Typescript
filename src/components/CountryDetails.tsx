@@ -70,8 +70,8 @@ export const CountryDetails: React.FC = () => {
             <div>
                 <h1>Country details</h1>
 
-                {countryInfo ? (
-                    <div>
+                {countryInfo? (
+                    <div data-testid="country-info">
                         <p>Capital: {countryInfo.capital[0]}</p>
                         <p>Population: {countryInfo.population}</p>
                         <p>
@@ -83,11 +83,10 @@ export const CountryDetails: React.FC = () => {
                             <sup>o</sup>
                         </p>
                         <small>Country Flag : </small>
-                        <img src={countryInfo.flags.svg} 
-                                height="70px"  alt="" />
+                        <img src={countryInfo.flags.svg} height="70px" alt="" />
                     </div>
                 ) : (
-                    <p>No data found</p>
+                    <p>Loading...</p>
                 )}
 
                 <br />
@@ -100,7 +99,7 @@ export const CountryDetails: React.FC = () => {
                 </Button>
 
                 {weatherInfo ? (
-                    <div className="weather-content">
+                    <div className="weather-content" data-testid="weather-details">
                         <br />
                         <img src={weatherInfo.weather_icons[0]} alt="_" />
                         <p>

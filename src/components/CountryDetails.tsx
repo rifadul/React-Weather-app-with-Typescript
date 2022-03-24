@@ -28,9 +28,12 @@ interface InitCountryWeatherInfo {
 export const CountryDetails: React.FC = () => {
     const { name } = useParams<InitiProps>();
     const [countryInfo, setCountryInfo] = useState<InitCountry>();
-    const [countryName, setCountryName] = useState('');
+    const [capitalName, setCapitalName] = useState('');
     const [weatherInfo, setWeatherInfo] = useState<InitCountryWeatherInfo>();
 
+    console.log('name',name);
+    console.log('capitalName',capitalName);
+    
     useEffect(() => {
         getCountryData();
     }, []);
@@ -40,11 +43,13 @@ export const CountryDetails: React.FC = () => {
             const response = await axios.get(
                 `https://restcountries.com/v3.1/name/${name}`
             );
+            
+            console.log('response data',response);
+            
             const data = response.data;
             // console.log('country data', data[0]);
-            // console.log('country data', data[0].capital[0]);
             setCountryInfo(data[0]);
-            setCountryName(data[0].capital[0]);
+            setCapitalName(data[0].capital[0]);
         } catch (error) {
             console.log(error);
         }
@@ -55,7 +60,7 @@ export const CountryDetails: React.FC = () => {
 
         try {
             const response = await axios.get(
-                `http://api.weatherstack.com/current?access_key=60774ad1b455f3cff7d3f8a273f488f5&query=${countryName}`
+                `http://api.weatherstack.com/current?access_key=60774ad1b455f3cff7d3f8a273f488f5&query=${capitalName}`
             );
             const data = response.data;
             // console.log('hh', response.data.current);

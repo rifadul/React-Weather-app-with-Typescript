@@ -8,27 +8,32 @@ describe('Test CountryDetails Componet', () => {
     beforeEach(async () => {
         jest.spyOn(axios, 'get').mockResolvedValue({
             data: [
-                {
-                    capital: ['Dhaka'],
-                    population: 164689383,
-                    latlng: [24.0, 90.0],
-                    flags: {
-                        png: 'https://flagcdn.com/w320/bd.png',
-                        svg: 'https://flagcdn.com/bd.svg',
+                    {
+                        capital: 'Dhaka',
+                        population: 164689383,
+                        latlng: [24.0, 90.0],
+                        flags: {
+                            png: 'https://flagcdn.com/w320/bd.png',
+                            svg: 'https://flagcdn.com/bd.svg',
+                        },
                     },
-                },
-            ],
+                ],
+            
         });
     });
 
 
     
     test('should render CountryDetails component with path "/details/BD"', async () => {
-        render(
-            <MemoryRouter initialEntries={['/details/BD']}>
-                <CountryDetails />
-            </MemoryRouter>
-        );
+        // eslint-disable-next-line testing-library/no-unnecessary-act
+        await act(async () => {
+            render(
+                <MemoryRouter initialEntries={['/details/BD']}>
+                    <CountryDetails />
+                </MemoryRouter>
+            );
+        });
+        
         expect(screen.getByText('Country details')).toBeInTheDocument();
     });
 

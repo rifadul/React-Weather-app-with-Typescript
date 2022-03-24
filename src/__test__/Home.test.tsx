@@ -12,4 +12,3 @@ describe('Test home Componet', () => {
         expect(screen.getByText('Search')).toBeInTheDocument();
     });
 });
-

@@ -3,6 +3,16 @@ import App from '../App';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Test App Router', () => {
+    test('should render app componet',()=>{
+        render(
+            <MemoryRouter>
+                <App/>
+            </MemoryRouter>
+        )
+        expect(screen.getByTestId('app-component-test-id')).toBeInTheDocument();
+    })
+
+
     test('should Render Home component with path "/"', () => {
         render(
             <MemoryRouter initialEntries={['/']}>

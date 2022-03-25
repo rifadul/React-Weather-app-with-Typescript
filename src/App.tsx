@@ -7,7 +7,7 @@ import { CountryDetails } from './components/CountryDetails';
 
 function App() {
     return (
-        <div className="App">
+        <div className="App" data-testid="app-component-test-id">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/details/:name" element={<CountryDetails />} />

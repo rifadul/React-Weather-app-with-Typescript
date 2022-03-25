@@ -31,9 +31,6 @@ export const CountryDetails: React.FC = () => {
     const [capitalName, setCapitalName] = useState('');
     const [weatherInfo, setWeatherInfo] = useState<InitCountryWeatherInfo>();
 
-    console.log('name',name);
-    console.log('capitalName',capitalName);
-    
     useEffect(() => {
         getCountryData();
     }, []);
@@ -43,9 +40,9 @@ export const CountryDetails: React.FC = () => {
             const response = await axios.get(
                 `https://restcountries.com/v3.1/name/${name}`
             );
-            
-            console.log('response data',response);
-            
+
+            console.log('response data', response);
+
             const data = response.data;
             // console.log('country data', data[0]);
             setCountryInfo(data[0]);
@@ -75,7 +72,7 @@ export const CountryDetails: React.FC = () => {
             <div>
                 <h1>Country details</h1>
 
-                {countryInfo? (
+                {countryInfo ? (
                     <div data-testid="country-info">
                         <p>Capital: {countryInfo.capital[0]}</p>
                         <p>Population: {countryInfo.population}</p>
@@ -104,7 +101,9 @@ export const CountryDetails: React.FC = () => {
                 </Button>
 
                 {weatherInfo ? (
-                    <div className="weather-content" data-testid="weather-details">
+                    <div
+                        className="weather-content"
+                        data-testid="weather-details">
                         <br />
                         <img src={weatherInfo.weather_icons[0]} alt="_" />
                         <p>

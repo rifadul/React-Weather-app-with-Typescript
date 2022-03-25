@@ -41,8 +41,6 @@ export const CountryDetails: React.FC = () => {
                 `https://restcountries.com/v3.1/name/${name}`
             );
 
-            console.log('response data', response);
-
             const data = response.data;
             // console.log('country data', data[0]);
             setCountryInfo(data[0]);

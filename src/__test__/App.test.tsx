@@ -1,33 +1,27 @@
-import { render, screen } from '@testing-library/react';
+import { act } from '@testing-library/react';
 import App from '../App';
-import { MemoryRouter } from 'react-router-dom';
+import {
+    componentRenderByMemoryRouter,
+    toBeExpectByTestId,
+    toBeExpectByText,
+} from '../utils/testUtils';
 
 describe('Test App Router', () => {
-    test('should render app componet',()=>{
-        render(
-            <MemoryRouter>
-                <App/>
-            </MemoryRouter>
-        )
-        expect(screen.getByTestId('app-component-test-id')).toBeInTheDocument();
-    })
-
+    test('should render app componet', () => {
+        componentRenderByMemoryRouter('/', <App />);
+        toBeExpectByTestId('app-component-test-id');
+    });
 
     test('should Render Home component with path "/"', () => {
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <App />
-            </MemoryRouter>
-        );
-        expect(screen.getByText('Weather App')).toBeInTheDocument();
+        componentRenderByMemoryRouter('/', <App />);
+        toBeExpectByText('Weather App');
     });
 
     test('should render CountryDetails component with path "/details/:name"', () => {
-        render(
-            <MemoryRouter initialEntries={['/details/BD']}>
-                <App />
-            </MemoryRouter>
-        );
-        expect(screen.getByText('Country details')).toBeInTheDocument();
+        // eslint-disable-next-line testing-library/no-unnecessary-act
+        act(() => {
+            componentRenderByMemoryRouter('/details/BD', <App />);
+        });
+        toBeExpectByText('Country details');
     });
 });

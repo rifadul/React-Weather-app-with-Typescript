@@ -1,65 +1,45 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { fireEvent, screen } from '@testing-library/react';
 import { Home } from '../components/Home';
-
-
+import {
+    componentRenderByMemoryRouter,
+    toBeExpectByTestId,
+    toBeExpectByText,
+} from '../utils/testUtils';
 
 // function for cheek inputbox tesing
-type TestElement = Document | Element | Window | Node
-function hasInputValue(e: TestElement, inputValue: string) {
+function hasInputValue(
+    e: Document | Element | Window | Node,
+    inputValue: string
+) {
     return screen.getByDisplayValue(inputValue) === e;
 }
 
-
 describe('Test home Componet', () => {
     test('should render Home component with path "/"', async () => {
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Home />
-            </MemoryRouter>
-        );
-        expect(screen.getByText('Search')).toBeInTheDocument();
+        componentRenderByMemoryRouter('/', <Home />);
+        toBeExpectByText('Search');
     });
 
     test('should render input box in home component', () => {
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Home />
-            </MemoryRouter>
-        );
-        expect(screen.getByTestId('inputbox-test-id')).toBeInTheDocument();
+        componentRenderByMemoryRouter('/', <Home />);
+        toBeExpectByTestId('inputbox-test-id');
     });
 
     test('should render button in home component', () => {
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Home />
-            </MemoryRouter>
-        );
-        expect(screen.getByTestId('button-testid')).toBeInTheDocument();
+        componentRenderByMemoryRouter('/', <Home />);
+        toBeExpectByTestId('button-testid');
     });
 
     test('cheek the button are disable when the inputbox are empty', () => {
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Home />
-            </MemoryRouter>
-        );
+        componentRenderByMemoryRouter('/', <Home />);
         const findButton = screen.getByRole('button');
         expect(findButton).toHaveAttribute('disabled');
     });
 
     test('cheek input box value', () => {
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <Home />
-            </MemoryRouter>
-        );
+        componentRenderByMemoryRouter('/', <Home />);
         const input = screen.getByLabelText('Enter country Name');
-
         fireEvent.change(input, { target: { value: 'BD' } });
         expect(hasInputValue(input, 'BD')).toBe(true);
     });
 });
-
-

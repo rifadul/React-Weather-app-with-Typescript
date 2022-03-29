@@ -58,7 +58,9 @@ export const CountryDetails: React.FC = () => {
                 `http://api.weatherstack.com/current?access_key=60774ad1b455f3cff7d3f8a273f488f5&query=${capitalName}`
             );
             const data = response.data;
-            // console.log('hh', response.data.current);
+            
+            console.log('hh data', response.data);
+            console.log('hh', response.data.current);
             setWeatherInfo(data.current);
         } catch (error) {
             console.error(error);
@@ -102,6 +104,8 @@ export const CountryDetails: React.FC = () => {
                     <div
                         className="weather-content"
                         data-testid="weather-details">
+                            <br />
+                            <h3>Weather Info</h3>
                         <br />
                         <img src={weatherInfo.weather_icons[0]} alt="_" />
                         <p>

@@ -24,4 +24,11 @@ describe('Test App Router', () => {
         });
         toBeExpectByText('Country details');
     });
+    test('should render 404 page', () => {
+        componentRenderByMemoryRouter(
+            '/details/BD/hjgsdfjghsdjfg',
+            <App />
+        );
+        toBeExpectByText('404 Page Not Found');
+    });
 });

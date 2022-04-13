@@ -86,11 +86,7 @@ export const CountryDetails: React.FC = () => {
                         </p>
                         <small>Country Flag : </small>
                         <img src={countryInfo.flags.svg} height="70px" alt="" />
-                    </div>
-                ) : (
-                    <p>Loading...</p>
-                )}
-
+                        
                 <br />
                 <br />
                 <Button
@@ -99,6 +95,12 @@ export const CountryDetails: React.FC = () => {
                     onClick={getWeatherDetails}>
                     Capital Weather
                 </Button>
+                    </div>
+                    
+                ) : (
+                    <p>Loading...</p>
+                )}
+
 
                 {weatherInfo ? (
                     <div

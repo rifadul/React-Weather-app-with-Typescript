@@ -30,6 +30,7 @@ export const CountryDetails: React.FC = () => {
     const [countryInfo, setCountryInfo] = useState<InitCountry>();
     const [capitalName, setCapitalName] = useState('');
     const [weatherInfo, setWeatherInfo] = useState<InitCountryWeatherInfo>();
+    const [validation, setValidation] = useState<Boolean>(false);
 
     useEffect(() => {
         getCountryData();
@@ -46,7 +47,8 @@ export const CountryDetails: React.FC = () => {
             setCountryInfo(data[0]);
             setCapitalName(data[0].capital[0]);
         } catch (error) {
-            console.log(error);
+            setValidation(true);
+            // console.log(error);
         }
     };
 
@@ -58,12 +60,12 @@ export const CountryDetails: React.FC = () => {
                 `http://api.weatherstack.com/current?access_key=60774ad1b455f3cff7d3f8a273f488f5&query=${capitalName}`
             );
             const data = response.data;
-            
-            console.log('hh data', response.data);
-            console.log('hh', response.data.current);
+
+            // console.log('hh data', response.data);
+            // console.log('hh', response.data.current);
             setWeatherInfo(data.current);
         } catch (error) {
-            console.error(error);
+            // console.error(error);
         }
     };
 
@@ -86,28 +88,31 @@ export const CountryDetails: React.FC = () => {
                         </p>
                         <small>Country Flag : </small>
                         <img src={countryInfo.flags.svg} height="70px" alt="" />
-                        
-                <br />
-                <br />
-                <Button
-                    size="medium"
-                    variant="contained"
-                    onClick={getWeatherDetails}>
-                    Capital Weather
-                </Button>
-                    </div>
-                    
-                ) : (
-                    <p>Loading...</p>
-                )}
 
+                        <br />
+                        <br />
+                        <Button
+                            size="medium"
+                            variant="contained"
+                            onClick={getWeatherDetails}>
+                            Capital Weather
+                        </Button>
+                    </div>
+                ) : (
+                    <p>
+                        {' '}
+                        {validation
+                            ? 'Please enter the valid country name'
+                            : 'Loading...'}
+                    </p>
+                )}
 
                 {weatherInfo ? (
                     <div
                         className="weather-content"
                         data-testid="weather-details">
-                            <br />
-                            <h3>Weather Info</h3>
+                        <br />
+                        <h3>Weather Info</h3>
                         <br />
                         <img src={weatherInfo.weather_icons[0]} alt="_" />
                         <p>

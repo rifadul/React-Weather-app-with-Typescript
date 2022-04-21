@@ -1,13 +1,13 @@
 import React, { FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { Container } from '@material-ui/core';
 
-type InitiProps = {
-    name: string;
-};
+// type InitiProps = {
+//     name: string;
+// };
 
 interface InitCountry {
     capital: string[];
@@ -26,31 +26,39 @@ interface InitCountryWeatherInfo {
 }
 
 export const CountryDetails: React.FC = () => {
-    const { name } = useParams<InitiProps>();
-    const [countryInfo, setCountryInfo] = useState<InitCountry>();
-    const [capitalName, setCapitalName] = useState('');
+    // const { name } = useParams<InitiProps>();
+    // const [countryInfo, setCountryInfo] = useState<InitCountry>();
+    // const [capitalName, setCapitalName] = useState('');
+
+    //new code
+    const { state }: any = useLocation();
+
+    const [countryInfo, setCountryInfo] = useState<InitCountry>(state[0]);
+    const [capitalName, setCapitalName] = useState(state[0].capital[0]);
+
+    
     const [weatherInfo, setWeatherInfo] = useState<InitCountryWeatherInfo>();
     const [validation, setValidation] = useState<Boolean>(false);
 
-    useEffect(() => {
-        getCountryData();
-    }, []);
+    // useEffect(() => {
+    //     getCountryData();
+    // });
 
-    const getCountryData = async () => {
-        try {
-            const response = await axios.get(
-                `https://restcountries.com/v3.1/name/${name}`
-            );
+    // const getCountryData = async () => {
+    //     try {
+    //         const response = await axios.get(
+    //             `https://restcountries.com/v3.1/name/${name}`
+    //         );
 
-            const data = response.data;
-            // console.log('country data', data[0]);
-            setCountryInfo(data[0]);
-            setCapitalName(data[0].capital[0]);
-        } catch (error) {
-            setValidation(true);
-            // console.log(error);
-        }
-    };
+    //         const data = response.data;
+    //         // console.log('country data', data[0]);
+    //         setCountryInfo(data[0]);
+    //         setCapitalName(data[0].capital[0]);
+    //     } catch (error) {
+    //         setValidation(true);
+    //         // console.log(error);
+    //     }
+    // };
 
     const getWeatherDetails = async (e: FormEvent) => {
         e.preventDefault();

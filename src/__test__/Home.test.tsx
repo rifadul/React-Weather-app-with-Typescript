@@ -17,7 +17,7 @@ function hasInputValue(
 describe('Test home Componet', () => {
     test('should render Home component with path "/"', async () => {
         componentRenderByMemoryRouter('/', <Home />);
-        toBeExpectByText('Submit');
+        toBeExpectByText('Search');
     });
 
     test('should render input box in home component', () => {
@@ -38,7 +38,7 @@ describe('Test home Componet', () => {
 
     test('cheek input box value', () => {
         componentRenderByMemoryRouter('/', <Home />);
-        const input = screen.getByLabelText('Enter country');
+        const input = screen.getByLabelText('Enter country Name');
         fireEvent.change(input, { target: { value: 'BD' } });
         expect(hasInputValue(input, 'BD')).toBe(true);
     });

@@ -1,13 +1,13 @@
-import React, { FormEvent } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { FormEvent, useCallback } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { Container } from '@material-ui/core';
 
-// type InitiProps = {
-//     name: string;
-// };
+type InitiProps = {
+    name: string;
+};
 
 interface InitCountry {
     capital: string[];
@@ -26,23 +26,28 @@ interface InitCountryWeatherInfo {
 }
 
 export const CountryDetails: React.FC = () => {
-    // const { name } = useParams<InitiProps>();
-    // const [countryInfo, setCountryInfo] = useState<InitCountry>();
-    // const [capitalName, setCapitalName] = useState('');
-
-    //new code
-    const { state }: any = useLocation();
-
-    const [countryInfo, setCountryInfo] = useState<InitCountry>(state[0]);
-    const [capitalName, setCapitalName] = useState(state[0].capital[0]);
-
-    
+    const { name } = useParams<InitiProps>();
+    const [countryInfo, setCountryInfo] = useState<InitCountry>();
+    const [capitalName, setCapitalName] = useState('');
     const [weatherInfo, setWeatherInfo] = useState<InitCountryWeatherInfo>();
     const [validation, setValidation] = useState<Boolean>(false);
 
-    // useEffect(() => {
-    //     getCountryData();
-    // });
+    const getCountryData = useCallback(async () => {
+        try {
+            const response = await axios.get(
+                `https://restcountries.com/v3.1/name/${name}`
+            );
+            const data = response.data;
+            setCountryInfo(data[0]);
+            setCapitalName(data[0].capital[0]);
+        } catch (error) {
+            setValidation(true);
+        }
+    }, [name]);
+
+    useEffect(() => {
+        getCountryData();
+    }, [getCountryData]);
 
     // const getCountryData = async () => {
     //     try {
@@ -68,9 +73,6 @@ export const CountryDetails: React.FC = () => {
                 `http://api.weatherstack.com/current?access_key=60774ad1b455f3cff7d3f8a273f488f5&query=${capitalName}`
             );
             const data = response.data;
-
-            // console.log('hh data', response.data);
-            // console.log('hh', response.data.current);
             setWeatherInfo(data.current);
         } catch (error) {
             // console.error(error);
@@ -107,12 +109,17 @@ export const CountryDetails: React.FC = () => {
                         </Button>
                     </div>
                 ) : (
-                    <p>
+                    <div>
                         {' '}
-                        {validation
-                            ? 'Please enter the valid country name'
-                            : 'Loading...'}
-                    </p>
+                        {validation ? (
+                            <p>
+                                Country info not found. 
+                                <Link to="/"> Please ty again</Link>
+                            </p>
+                        ) : (
+                            'Loading...'
+                        )}
+                    </div>
                 )}
 
                 {weatherInfo ? (

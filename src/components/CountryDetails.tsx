@@ -114,7 +114,7 @@ export const CountryDetails: React.FC = () => {
                         {validation ? (
                             <p>
                                 Country info not found. 
-                                <Link to="/"> Please ty again</Link>
+                                <Link to="/"> Please try again</Link>
                             </p>
                         ) : (
                             'Loading...'

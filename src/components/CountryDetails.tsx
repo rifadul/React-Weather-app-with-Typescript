@@ -31,6 +31,7 @@ export const CountryDetails: React.FC = () => {
     const [weatherInfo, setWeatherInfo] = useState<InitCountryWeatherInfo>();
     const [countryApiError, setCountryApiError] = useState<Boolean>(false);
     const [weatherApiError, setWeatherApiError] = useState<Boolean>(false);
+    const [loading, setLoading] = useState<Boolean>(false);
     const navigate = useNavigate();
 
     const getCountryData = useCallback(async () => {
@@ -52,13 +53,14 @@ export const CountryDetails: React.FC = () => {
 
     const getWeatherDetails = async (e: FormEvent) => {
         e.preventDefault();
-
+        setLoading(true);
         try {
             const response = await axios.get(
                 `http://api.weatherstack.com/current?access_key=60774ad1b455f3cff7d3f8a273f488f5&query=${capitalName}`
             );
             const data = response.data;
             setWeatherInfo(data.current);
+            setLoading(false);
         } catch (error) {
             setWeatherApiError(true);
         }
@@ -103,10 +105,6 @@ export const CountryDetails: React.FC = () => {
                         {' '}
                         {countryApiError ? (
                             <>
-                                {/* <p>
-                                    Country info not found.
-                                    <Link to="/"> Please try again</Link>
-                                </p> */}
                                 <Alert severity="warning" sx={{ m: 2 }}>
                                     Country info not found!
                                 </Alert>
@@ -145,10 +143,10 @@ export const CountryDetails: React.FC = () => {
                     <div>
                         {weatherApiError ? (
                             <Alert severity="warning">
-                                This is a warning alert — check it out!
+                                Weather info not found. Please try again!
                             </Alert>
                         ) : (
-                            ''
+                            <p>{loading ? 'Loading...' : ''}</p>
                         )}
                     </div>
                 )}

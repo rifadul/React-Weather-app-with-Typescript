@@ -17,7 +17,7 @@ function hasInputValue(
 describe('Test home Componet', () => {
     test('should render Home component with path "/"', async () => {
         componentRenderByMemoryRouter('/', <Home />);
-        toBeExpectByText('Search');
+        toBeExpectByText('Submit');
     });
 
     test('should render input box in home component', () => {

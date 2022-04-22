@@ -29,7 +29,7 @@ export const Home: React.FC = () => {
                 />
             </div>
             <Button size="medium" variant="contained" data-testid="button-testid" disabled={countryName===''} onClick={getCuntryName}>
-                Search
+                Submit
             </Button>
         </Container>
     );

@@ -22,7 +22,7 @@ describe('Test App Router', () => {
         act(() => {
             componentRenderByMemoryRouter('/details/BD', <App />);
         });
-        toBeExpectByText('Country details');
+        toBeExpectByText('Country Details');
     });
     test('should render 404 page', () => {
         componentRenderByMemoryRouter(

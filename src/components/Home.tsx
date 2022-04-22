@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { Container } from '@material-ui/core';
 import TextField from '@mui/material/TextField';
 
-export const Home = () => {
+export const Home: React.FC = () => {
     const [countryName, setCountryName] = useState('');
     const navigate = useNavigate();
 

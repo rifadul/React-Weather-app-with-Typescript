@@ -30,7 +30,7 @@ describe('Test CountryDetails Componet', () => {
             componentRenderByMemoryRouter('/details/BD', <CountryDetails />);
         });
 
-        toBeExpectByText('Country details');
+        toBeExpectByText('Country Details');
     });
 
     test('should render country info', async () => {

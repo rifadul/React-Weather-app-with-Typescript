@@ -1,9 +1,8 @@
 import React, { FormEvent, useCallback } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button } from '@mui/material';
-import { Container } from '@material-ui/core';
+import { Button, Container, Alert } from '@mui/material';
 
 type InitiProps = {
     name: string;
@@ -30,7 +29,9 @@ export const CountryDetails: React.FC = () => {
     const [countryInfo, setCountryInfo] = useState<InitCountry>();
     const [capitalName, setCapitalName] = useState('');
     const [weatherInfo, setWeatherInfo] = useState<InitCountryWeatherInfo>();
-    const [validation, setValidation] = useState<Boolean>(false);
+    const [countryApiError, setCountryApiError] = useState<Boolean>(false);
+    const [weatherApiError, setWeatherApiError] = useState<Boolean>(false);
+    const navigate = useNavigate();
 
     const getCountryData = useCallback(async () => {
         try {
@@ -41,29 +42,13 @@ export const CountryDetails: React.FC = () => {
             setCountryInfo(data[0]);
             setCapitalName(data[0].capital[0]);
         } catch (error) {
-            setValidation(true);
+            setCountryApiError(true);
         }
     }, [name]);
 
     useEffect(() => {
         getCountryData();
     }, [getCountryData]);
-
-    // const getCountryData = async () => {
-    //     try {
-    //         const response = await axios.get(
-    //             `https://restcountries.com/v3.1/name/${name}`
-    //         );
-
-    //         const data = response.data;
-    //         // console.log('country data', data[0]);
-    //         setCountryInfo(data[0]);
-    //         setCapitalName(data[0].capital[0]);
-    //     } catch (error) {
-    //         setValidation(true);
-    //         // console.log(error);
-    //     }
-    // };
 
     const getWeatherDetails = async (e: FormEvent) => {
         e.preventDefault();
@@ -75,14 +60,19 @@ export const CountryDetails: React.FC = () => {
             const data = response.data;
             setWeatherInfo(data.current);
         } catch (error) {
-            // console.error(error);
+            setWeatherApiError(true);
         }
+    };
+
+    const getBackToHome = (e: FormEvent) => {
+        e.preventDefault();
+        navigate('/');
     };
 
     return (
         <Container maxWidth="md">
             <div>
-                <h1>Country details</h1>
+                <h1>Country Details</h1>
 
                 {countryInfo ? (
                     <div data-testid="country-info">
@@ -111,11 +101,22 @@ export const CountryDetails: React.FC = () => {
                 ) : (
                     <div>
                         {' '}
-                        {validation ? (
-                            <p>
-                                Country info not found. 
-                                <Link to="/"> Please try again</Link>
-                            </p>
+                        {countryApiError ? (
+                            <>
+                                {/* <p>
+                                    Country info not found.
+                                    <Link to="/"> Please try again</Link>
+                                </p> */}
+                                <Alert severity="warning" sx={{ m: 2 }}>
+                                    Country info not found!
+                                </Alert>
+                                <Button
+                                    size="medium"
+                                    variant="contained"
+                                    onClick={getBackToHome}>
+                                    Please try aging
+                                </Button>
+                            </>
                         ) : (
                             'Loading...'
                         )}
@@ -129,7 +130,10 @@ export const CountryDetails: React.FC = () => {
                         <br />
                         <h3>Weather Info</h3>
                         <br />
-                        <img src={weatherInfo.weather_icons[0]} alt="_" />
+                        <img
+                            src={weatherInfo.weather_icons[0]}
+                            alt="Weather Icon"
+                        />
                         <p>
                             Temperature: {weatherInfo.temperature}
                             <sup>o</sup>
@@ -138,7 +142,15 @@ export const CountryDetails: React.FC = () => {
                         <p>Precip: {weatherInfo.precip}</p>
                     </div>
                 ) : (
-                    ''
+                    <div>
+                        {weatherApiError ? (
+                            <Alert severity="warning">
+                                This is a warning alert — check it out!
+                            </Alert>
+                        ) : (
+                            ''
+                        )}
+                    </div>
                 )}
             </div>
         </Container>
